@@ -3,7 +3,8 @@ Created on 23 Dec 2020
 
 @author: si
 '''
-from flask import current_app, jsonify, make_response
+from flask import abort, current_app, jsonify, make_response
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 
 class JsonException(Exception):
@@ -53,3 +54,10 @@ def handle_user_exception(error):
     assert isinstance(error, UserException)
     response = make_response(str(error.to_dict()))
     return response, error.status_code
+
+
+def get_object_or_404(model, *criterion):
+    try:
+        return model.query.filter(*criterion).one()
+    except (NoResultFound, MultipleResultsFound):
+        abort(404)
