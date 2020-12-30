@@ -54,4 +54,8 @@ class TestDataset(BaseTest):
                                    content_type='application/json'
                                    )
         self.assertEqual(400, rv.status_code)
-        self.assertIn('Failed to decode JSON object', rv.data.decode('utf-8'))
+        self.assertIn('Invalid JSON', rv.data.decode('utf-8'))
+
+    def test_unknown_doc(self):
+        rv = self.test_client.get('/dataset/aaaaa')
+        self.assertEqual(404, rv.status_code)
