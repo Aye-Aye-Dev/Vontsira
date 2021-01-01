@@ -32,7 +32,7 @@ class TestDataset(BaseTest):
     def test_create_then_retrieve_dataset_doc(self):
 
         r = self.get_sample_data('simple_doc')
-        rv = self.test_client.post('/dataset/',
+        rv = self.test_client.post('/api/dataset/',
                                    data=r,
                                    content_type='application/json'
                                    )
@@ -41,7 +41,7 @@ class TestDataset(BaseTest):
 
         self.assertIn("dataset_ref", meta_data)
         dataset_ref = meta_data['dataset_ref']
-        rv = self.test_client.get(f'/dataset/{dataset_ref}')
+        rv = self.test_client.get(f'/api/dataset/{dataset_ref}')
         self.assertEqual(200, rv.status_code)
         sample_data = json.loads(rv.data)
         self.assertEqual("Orb Spiders", sample_data['title'])
@@ -49,7 +49,7 @@ class TestDataset(BaseTest):
     def test_invalid_json(self):
 
         r = self.get_sample_data('invalid_json')
-        rv = self.test_client.post('/dataset/',
+        rv = self.test_client.post('/api/dataset/',
                                    data=r,
                                    content_type='application/json'
                                    )
@@ -57,5 +57,5 @@ class TestDataset(BaseTest):
         self.assertIn('Invalid JSON', rv.data.decode('utf-8'))
 
     def test_unknown_doc(self):
-        rv = self.test_client.get('/dataset/aaaaa')
+        rv = self.test_client.get('/api/dataset/aaaaa')
         self.assertEqual(404, rv.status_code)

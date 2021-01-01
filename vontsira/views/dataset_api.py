@@ -3,10 +3,10 @@ from flask import Blueprint, current_app, jsonify, make_response, request
 from vontsira.controllers.dataset import DatasetController
 from vontsira.database import db
 
-dataset_view = Blueprint('dataset_views', __name__)
+dataset_api_view = Blueprint('dataset_views', __name__)
 
 
-@dataset_view.route('/')
+@dataset_api_view.route('/')
 def home_dashboard():
     """
     list datasets
@@ -14,7 +14,7 @@ def home_dashboard():
     raise NotImplementedError("TODO")
 
 
-@dataset_view.route('/', methods=['POST'])
+@dataset_api_view.route('/', methods=['POST'])
 def dataset_document_new():
     """
     The document is stored in the document-store with 'dataset_ref' as the name of the document.
@@ -27,7 +27,7 @@ def dataset_document_new():
     return response, 201
 
 
-@dataset_view.route('/<dataset_ref>', methods=['GET'])
+@dataset_api_view.route('/<dataset_ref>', methods=['GET'])
 def dataset_document_view(dataset_ref):
     """
     Return the original document,
