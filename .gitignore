@@ -1,5 +1,7 @@
 # personal settings files. local_config.py could be symlink to local_config_username.py
 vontsira/settings/local_config*.py
+local_document_store/*
+vontsira.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

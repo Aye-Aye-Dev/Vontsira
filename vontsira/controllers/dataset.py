@@ -88,6 +88,9 @@ class DatasetController:
         db_record = {'dataset_ref': dataset_ref,
                      }
 
+        if 'title' in doc:
+            db_record['title'] = doc['title']
+
         # TODO maybe retry on existing dataset ref?
         # Uniqueness pf dataset ref is trusted to the db
         self.db.session.add(Dataset(**db_record))

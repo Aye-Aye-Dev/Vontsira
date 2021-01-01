@@ -1,0 +1,9 @@
+{% from 'dataset_list_macro.html' import dataset_list %}
+{% extends "base.html" %}
+{% block body %}
+
+<h1>{{page_name}}</h1>
+
+{{dataset_list(datasets)}}
+
+{% endblock %}

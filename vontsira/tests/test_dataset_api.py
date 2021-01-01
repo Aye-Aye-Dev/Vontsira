@@ -1,10 +1,12 @@
 import json
 import os
 
+from vontsira.database import db
+from vontsira.models import Dataset
 from vontsira.tests.base import BaseTest
 
 
-class TestDataset(BaseTest):
+class TestDatasetApi(BaseTest):
     """
     Flask API tests for the dataset blueprint.
     """
@@ -59,3 +61,20 @@ class TestDataset(BaseTest):
     def test_unknown_doc(self):
         rv = self.test_client.get('/api/dataset/aaaaa')
         self.assertEqual(404, rv.status_code)
+
+    def test_doc_fields_to_db(self):
+
+        r = self.get_sample_data('simple_doc')
+        rv = self.test_client.post('/api/dataset/',
+                                   data=r,
+                                   content_type='application/json'
+                                   )
+        self.assertEqual(201, rv.status_code)
+        meta_data = json.loads(rv.data)
+        dataset_ref = meta_data['dataset_ref']
+
+        db_recs = db.session.query(Dataset).all()
+        self.assertEqual(1, len(db_recs))
+        r = db_recs[0]
+        self.assertEqual(dataset_ref, r.dataset_ref)
+        self.assertEqual('Orb Spiders', r.title)

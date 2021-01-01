@@ -10,7 +10,17 @@ cd vontsira/settings
 cp local_config_example.py local_config.py
 cd ../..
 python manage.py local update_database
+python manage.py local run
 ```
+
+POST a sample dataset document to the API-
+```shell
+curl --header "Content-Type: application/json" \
+     --data '{"title":"Stingless Bees of South America"}'  \
+     --request POST http://localhost:8080/api/dataset/
+```
+
+... and you should see it in the UI listing at [http://localhost:8080/dataset/]
 
 ## Architecture Overview
 

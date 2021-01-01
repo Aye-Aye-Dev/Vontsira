@@ -3,7 +3,7 @@ from flask import Blueprint, current_app, jsonify, make_response, request
 from vontsira.controllers.dataset import DatasetController
 from vontsira.database import db
 
-dataset_api_view = Blueprint('dataset_views', __name__)
+dataset_api_view = Blueprint('dataset_api', __name__)
 
 
 @dataset_api_view.route('/')
