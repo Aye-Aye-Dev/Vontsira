@@ -47,12 +47,28 @@ class DatasetController:
         return self._meta_data
 
     @property
+    def dataset_ref(self):
+        """
+        Returns:
+            (str)
+        """
+        return self._meta_data['dataset_ref']
+
+    @property
     def raw_document(self):
         """
         Returns:
             (str)
         """
         return self.document_storage.raw_document
+
+    @property
+    def database_record(self):
+        """
+        Returns:
+            (SqlAlchemy ORM record)
+        """
+        return self._dataset_record
 
     def create_new(self, raw_doc):
         """

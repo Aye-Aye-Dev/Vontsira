@@ -3,8 +3,9 @@ Created on 1 Jan 2021
 
 @author: si
 '''
-from flask import Blueprint, render_template
+from flask import Blueprint, current_app, render_template
 
+from vontsira.controllers.dataset import DatasetController
 from vontsira.database import db
 from vontsira.models import Dataset
 
@@ -32,4 +33,10 @@ def single_dataset(dataset_ref):
     """
     Return the original document,
     """
-    return "single"
+    dc = DatasetController(db, current_app.config['DOCUMENT_STORAGE_URI'])
+    dc.load(dataset_ref)
+    page_vars = {'dataset': dc.database_record,
+                 'raw_document': dc.raw_document,
+                 'page_name': f'{dc.database_record.title} ({dc.database_record.dataset_ref})',
+                 }
+    return render_template("dataset_single.html", **page_vars)

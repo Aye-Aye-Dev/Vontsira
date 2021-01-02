@@ -1,0 +1,9 @@
+a.dataset_ref_link {
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 1.5rem;
+}
+
+a:hover.dataset_ref_link {
+    text-decoration: underline;
+}

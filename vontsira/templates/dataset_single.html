@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block body %}
+
+<h1>{{page_name}}</h1>
+
+<table class="table">
+  <col style="width:10em">
+  <tbody>
+    <tr>
+      <td>Dataset ref</td><td>{{dataset.dataset_ref}}</td>
+    </tr>
+    <tr>
+      <td>Title</td><td>{{dataset.title}}</td>
+    </tr>
+    <tr>
+      <td>Last Updated</td><td>{{dataset.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
+    </tr>
+    <tr>
+      <td>Raw Document</td><td><pre>{{raw_document}}</pre></td>
+    </tr>
+  </tbody>
+</table>
+
+{% endblock %}

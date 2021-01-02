@@ -14,10 +14,11 @@
   <tbody>
   {% for d in datasets %}
     <tr>
-      <th scope="row">
-      	<a href="{{ url_for('dataset_ui.single_dataset', dataset_ref=d.dataset_ref) }}">
-      		{{d.dataset_ref}}</th>
+      <td>
+      	<a href="{{ url_for('dataset_ui.single_dataset', dataset_ref=d.dataset_ref) }}" class="dataset_ref_link">
+      		{{d.dataset_ref}}
       	</a>
+      </td>
       <td>{{d.last_updated.strftime('%Y-%m-%d %H:%M')}}</td>
       <td>{{d.title}}</td>
     </tr>
