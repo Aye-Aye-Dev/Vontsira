@@ -3,6 +3,7 @@ Created on 28 Dec 2020
 
 @author: si
 '''
+import json
 import os
 
 import ndjson
@@ -28,17 +29,19 @@ class AbstractDocumentStorage:
         self.meta_data = None
         self.raw_document = None
 
-    def load(self, dataset_ref):
+    def load(self, dataset_ref, version_ref):
         """
         Args:
             dataset_ref (str)
+            version_ref (str)
         """
         raise NotImplementedError("Must be implemented by subclasses")
 
-    def write(self, dataset_ref, raw_document, meta_data):
+    def write(self, dataset_ref, version_ref, raw_document, meta_data):
         """
         Args:
             dataset_ref (str)
+            version_ref (str)
             raw_document (str) must be utf8
             meta_data (dict) that is safe to encode as JSON
         """
@@ -50,15 +53,16 @@ class FilesystemDocumentStorage(AbstractDocumentStorage):
         super().__init__()
         self.filesystem_path = filesystem_path
 
-    def load(self, dataset_ref):
-        document_path = os.path.join(self.filesystem_path, dataset_ref)
+    def load(self, dataset_ref, version_ref):
+        document_path = os.path.join(self.filesystem_path, f"{dataset_ref}.{version_ref}")
         with open(document_path, 'r') as f:
-            self.meta_data = f.readline()
+            meta_line = f.readline()
+            self.meta_data = json.loads(meta_line)
             self.raw_document = f.read()
 
-    def write(self, dataset_ref, raw_document, meta_data):
+    def write(self, dataset_ref, version_ref, raw_document, meta_data):
 
-        document_path = os.path.join(self.filesystem_path, dataset_ref)
+        document_path = os.path.join(self.filesystem_path, f"{dataset_ref}.{version_ref}")
         with open(document_path, 'w') as f:
             w = ndjson.writer(f)
             w.writerow(meta_data)

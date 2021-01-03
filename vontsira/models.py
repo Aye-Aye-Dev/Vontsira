@@ -3,9 +3,7 @@ Created on 23 Dec 2020
 
 @author: si
 '''
-from datetime import datetime
-
-from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
+from sqlalchemy import Column, String, Integer, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship, backref
 
 from vontsira.base_model import BaseModel
@@ -34,5 +32,11 @@ class Dataset(BaseModel, db.Model):
     dataset_ref = Column(String(36), nullable=False, index=True, unique=True)
     title = Column(String(255), nullable=True)
 
-#     user_id = Column(Integer, ForeignKey('user.id'))
-#     user = relationship("User", backref=backref('datasets'))
+
+class DatasetVersion(BaseModel, db.Model):
+    __tablename__ = 'dataset_version'
+    version_ref = Column(String(36), nullable=False, index=True)
+    dataset_id = Column(Integer, ForeignKey('dataset.id'), nullable=False)
+    dataset = relationship("Dataset", backref=backref('versions'))
+
+    table_args = (UniqueConstraint('dataset_id', 'version_ref', name='version_ref_unique'))

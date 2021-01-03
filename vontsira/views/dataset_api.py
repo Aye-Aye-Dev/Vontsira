@@ -19,6 +19,7 @@ def dataset_document_new():
     """
     The document is stored in the document-store with 'dataset_ref' as the name of the document.
     Create a new dataset ref.
+    If the document has one or more 'engine_ref's create a version.
     """
     dc = DatasetController(db, current_app.config['DOCUMENT_STORAGE_URI'])
     dc.create_new(request.get_data())

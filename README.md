@@ -20,7 +20,7 @@ curl --header "Content-Type: application/json" \
      --request POST http://localhost:8080/api/dataset/
 ```
 
-... and you should see it in the UI listing at [http://localhost:8080/dataset/]
+... and you should see it in the UI listing at (http://localhost:8080/dataset/)
 
 ## Architecture Overview
 

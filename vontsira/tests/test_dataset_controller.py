@@ -47,8 +47,7 @@ class TestDatasetController(BaseTest):
         # This unit test should be using sqlite which uses a very fine grained clock for the last
         # updated field. Ensure these datestamps are all different
         date_stamps = set([str(r[1]) for r in ordered_versions])
-        print(date_stamps)
-        # TODO I am here
+        self.assertEqual(4, len(date_stamps), "DB timestamps aren't fine grained enough for test")
 
         dc_b = DatasetController(db, current_app.config['DOCUMENT_STORAGE_URI'])
         dc_b.load(dc_a.dataset_ref)
